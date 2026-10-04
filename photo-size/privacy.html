@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>개인정보 처리 안내 - 사진 규격 맞추기</title>
+<meta name="description" content="사진 규격 맞추기 도구의 개인정보 처리 안내입니다. 사진은 서버로 전송되지 않습니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">사진 규격 맞추기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html" aria-current="page">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="prose">
+  <h1>개인정보 처리 안내</h1>
+  <p class="lead">시행일: <span class="placeholder">[대표 확정]</span></p>
+
+  <h2>1. 사진은 서버로 전송되지 않습니다</h2>
+  <p>이 사이트의 사진 규격 맞추기 도구는 사용자가 고른 사진을 사용자의 브라우저 안에서만 읽고, 자르고, 압축합니다. 사진 파일과 변환 결과는 운영자 서버나 제3자에게 전송·저장되지 않습니다.</p>
+  <ul>
+    <li>사진은 브라우저의 Canvas 기능으로 처리되며, 결과는 브라우저 메모리 안의 임시 주소(blob)로만 만들어져 다운로드됩니다.</li>
+    <li>도구 페이지에는 콘텐츠 보안 정책(<code>connect-src 'none'</code>)을 적용해, 페이지의 스크립트가 외부로 데이터를 보내는 요청(fetch, XHR, beacon, WebSocket 등)을 브라우저가 차단하도록 했습니다.</li>
+    <li>외부 스크립트, 외부 글꼴, 외부 이미지를 불러오지 않습니다.</li>
+    <li>페이지를 닫거나 새로고침하면 불러온 사진과 결과는 브라우저에서 사라집니다. 다만 사용자가 '다운로드'한 파일은 사용자 기기에 그대로 저장되므로 직접 관리해야 합니다.</li>
+  </ul>
+
+  <h2>2. 쿠키와 추적</h2>
+  <p>이 사이트는 쿠키, 로컬 저장소, 방문 분석 도구, 광고 추적 코드를 사용하지 않습니다.</p>
+  <p>다만 사이트 파일을 전달하는 호스팅 서비스는 일반적인 웹 서버처럼 접속 기록(IP 주소, 요청 시각, 브라우저 정보 등)을 남길 수 있습니다. 호스팅 서비스와 그 기록 정책: <span class="placeholder">[대표 확정]</span></p>
+
+  <h2>3. 수집하는 개인정보</h2>
+  <p>운영자가 직접 수집하는 개인정보는 없습니다. 문의를 보내시는 경우에 한해, 답변을 위해 보내신 연락처와 내용을 확인합니다.</p>
+
+  <h2>4. 앞으로 바뀔 수 있는 점</h2>
+  <p>광고나 방문 분석을 도입하게 되면, 도입 전에 이 안내를 먼저 고치고 무엇이 어떤 목적으로 쓰이는지 알리겠습니다.</p>
+
+  <h2>5. 문의</h2>
+  <p>운영자: 프로젝트원스튜디오<br>
+  문의 방법: <span class="placeholder">[대표 확정: 문의용 이메일]</span></p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>규격은 참고용입니다. 제출 기관의 최신 안내를 우선하세요.</p>
+  </div>
+</footer>
+</body>
+</html>

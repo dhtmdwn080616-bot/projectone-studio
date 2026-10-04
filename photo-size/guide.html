@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>여권사진 규격 맞추는 방법 - 사진 규격 맞추기</title>
+<meta name="description" content="여권사진을 온라인으로 제출할 때 픽셀 크기와 용량을 맞추는 순서와 확인할 점을 정리했습니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">사진 규격 맞추기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html" aria-current="page">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="prose">
+  <h1>여권사진 규격 맞추는 방법</h1>
+  <div class="notice" role="note">
+    <p>제출 기관의 최신 안내를 꼭 확인하세요. 규격은 참고용입니다.</p>
+    <p>이 글의 숫자는 공개된 2차 자료에서 확인한 값이며 공식 원문으로 다시 확인하지 않았습니다. 여권 사진 기준은 외교부 여권안내 누리집이나 접수처 안내를 기준으로 하세요.</p>
+  </div>
+
+  <h2>1. 먼저 제출처의 조건을 확인하세요</h2>
+  <p>사진 조건은 보통 다음 항목으로 안내됩니다. 아래 항목을 제출처 안내에서 찾아 메모해 두면 도구에 그대로 입력할 수 있습니다.</p>
+  <ul>
+    <li>인화 크기(cm) 또는 픽셀 크기(px)</li>
+    <li>파일 형식(예: JPG)</li>
+    <li>최대 파일 용량(KB)</li>
+    <li>얼굴 크기, 배경색, 촬영 시점 등 사진 내용에 대한 조건</li>
+  </ul>
+  <p>공식 안내 예: <a href="https://www.passport.go.kr/" rel="noopener noreferrer">외교부 여권안내</a> (최신 기준은 해당 누리집에서 확인하세요)</p>
+
+  <h2>2. 알려진 여권사진 숫자 (참고용)</h2>
+  <p>웹 검색으로 확인한 2차 자료에서는 다음 값이 자주 언급됩니다. 공식 기준과 다를 수 있습니다.</p>
+  <ul>
+    <li>인화 크기 3.5×4.5cm. 300dpi로 환산하면 413×531px입니다(3.5cm ÷ 2.54 × 300 ≈ 413, 4.5cm ÷ 2.54 × 300 ≈ 531).</li>
+    <li>온라인(모바일) 신청 시 JPG, 500KB 이하, 가로·세로 픽셀에 허용 범위가 있다는 설명이 있습니다. 정확한 범위는 신청 화면의 안내를 따르세요.</li>
+  </ul>
+
+  <h2>3. 도구로 크기와 용량 맞추기</h2>
+  <ol>
+    <li><a href="index.html">도구</a>에서 사진을 고르거나 끌어다 놓습니다.</li>
+    <li>프리셋에서 '여권 사진 참고값'을 고르거나, 제출처 숫자가 다르면 가로·세로 px와 최대 용량을 직접 입력합니다.</li>
+    <li>자르기 영역을 드래그해 얼굴이 가운데 오도록 옮기고, 확대·축소로 얼굴 크기를 조절합니다. 가운데 세로선을 얼굴 중심에 맞추면 편합니다. 얼굴이 차지해야 하는 비율은 제출처 안내를 확인하세요.</li>
+    <li>결과 미리보기에서 px와 KB가 원하는 값인지 확인하고 JPG로 저장합니다.</li>
+  </ol>
+
+  <h2>4. 용량이 목표보다 클 때</h2>
+  <p>도구는 JPG 품질을 낮춰 가며 목표 용량 이하이면서 가능한 한 높은 품질을 찾습니다(제한된 횟수의 탐색이라 최댓값을 보장하지는 않습니다). 품질을 최저로 낮춰도 목표를 넘으면 도구가 알려 주며, 그럴 때는 최대 용량 또는 픽셀 크기 조건을 다시 확인하세요. 품질이 많이 낮아지면 얼굴 윤곽이 뭉개질 수 있으니 미리보기를 확대해 확인하세요.</p>
+  <p>용량은 1KB를 1,000바이트로 보고 계산합니다. 1KB를 1,024바이트로 보는 곳보다 조금 더 엄격한 기준이라, 어느 쪽 기준이어도 목표 이하가 되도록 한 것입니다.</p>
+
+  <h2>5. 사진 자체의 조건은 도구가 확인하지 않습니다</h2>
+  <p>배경색, 얼굴 크기와 위치, 안경·모자, 표정, 그림자, 최근 촬영 여부 같은 조건은 이 도구가 판단하지 않습니다. 이런 항목은 기관마다 다르고 바뀔 수 있으므로 제출처 안내의 예시 사진과 비교해 보세요.</p>
+
+  <h2>6. 사진 방향(회전)이 이상할 때</h2>
+  <p>스마트폰 사진에는 회전 정보가 들어 있는 경우가 있고, 브라우저에 따라 반영 여부가 다를 수 있습니다. 자르기 화면과 결과 미리보기가 실제 사진과 같은 방향인지 확인하고, 다르면 사진 앱에서 방향을 바로잡아 저장한 뒤 다시 불러오세요.</p>
+
+  <h2>7. 원본 사진이 작을 때</h2>
+  <p>자른 영역이 출력 크기보다 작으면 사진이 확대되어 흐릿해질 수 있습니다. 도구가 결과 아래에 알려 주니, 가능하면 해상도가 더 높은 원본을 쓰세요.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>규격은 참고용입니다. 제출 기관의 최신 안내를 우선하세요.</p>
+  </div>
+</footer>
+</body>
+</html>

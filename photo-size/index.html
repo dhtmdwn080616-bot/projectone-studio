@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- connect-src 'none': 이 페이지는 fetch/XHR/beacon/WebSocket 등 어떤 네트워크 전송도 할 수 없다. 외부 스크립트·스타일도 불가. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>증명사진·여권사진 규격 맞추기 - 브라우저에서만 처리</title>
+<meta name="description" content="사진을 서버에 올리지 않고 브라우저 안에서 증명사진·여권사진 크기(px)와 용량(KB)을 맞추는 무료 도구입니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">사진 규격 맞추기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html" aria-current="page">도구</a>
+      <a href="guide.html">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <h1>증명사진·여권사진 규격 맞추기</h1>
+  <p class="lead">사진을 원하는 비율로 자르고, 픽셀 크기와 파일 용량(KB)을 맞춰 JPG로 저장합니다.</p>
+  <p><span class="privacy-badge">사진은 이 브라우저 안에서만 처리되며 서버로 전송되지 않습니다</span></p>
+
+  <div class="notice" role="note">
+    <p>제출 기관의 최신 안내를 꼭 확인하세요. 규격은 참고용입니다.</p>
+    <p>프리셋 숫자는 공개된 2차 자료를 바탕으로 한 참고값이며, 이 도구로 만든 사진이 접수·심사 기준을 충족한다는 뜻이 아닙니다. 얼굴 크기, 배경색, 표정 등은 이 도구가 확인하지 않습니다.</p>
+  </div>
+
+  <div class="layout">
+    <section class="card" aria-labelledby="h-photo">
+      <h2 id="h-photo">1. 사진 불러오기와 자르기</h2>
+      <label class="dropzone" id="dropzone" for="file">
+        <strong>사진 선택 또는 여기로 끌어다 놓기</strong>
+        <span>JPG, PNG, WebP 등 브라우저가 열 수 있는 이미지</span>
+        <input class="visually-hidden" type="file" id="file" accept="image/*">
+      </label>
+      <p class="status" id="load-status" role="status" aria-live="polite"></p>
+      <p class="status warn" id="orient-note" role="status" aria-live="polite"></p>
+
+      <div class="stage-wrap" id="stage-wrap">
+        <p class="stage-empty" id="stage-empty">사진을 불러오면 여기에 자르기 영역이 나타납니다.</p>
+        <canvas id="stage" hidden tabindex="0" role="img"
+          aria-label="자르기 영역. 드래그하거나 방향키로 위치를 옮기고, 더하기·빼기 키 또는 확대 슬라이더로 크기를 조절합니다."
+          aria-describedby="stage-hint"></canvas>
+      </div>
+      <div class="zoom-row">
+        <button type="button" class="btn" id="zoom-out" aria-label="축소" disabled>−</button>
+        <label for="zoom" class="visually-hidden">확대 배율</label>
+        <input type="range" id="zoom" min="1" max="6" step="0.01" value="1" disabled>
+        <button type="button" class="btn" id="zoom-in" aria-label="확대" disabled>+</button>
+        <button type="button" class="btn" id="reset" disabled>맞춤</button>
+      </div>
+      <p class="hint" id="stage-hint">드래그(터치)로 위치 이동, 두 손가락 또는 마우스 휠로 확대·축소. 키보드: 방향키 이동(Shift는 크게), +/− 확대·축소, 0 초기화. 가운데 세로선과 가로선은 위치를 잡기 위한 참고선입니다. 사진이 옆으로 누워 보이면 사진 앱에서 방향을 바로잡은 뒤 불러오세요.</p>
+    </section>
+
+    <div>
+      <section class="card" aria-labelledby="h-spec">
+        <h2 id="h-spec">2. 규격 정하기</h2>
+        <div class="field">
+          <label for="preset">프리셋</label>
+          <select id="preset"></select>
+          <p class="preset-desc" id="preset-desc"></p>
+        </div>
+        <div class="grid3">
+          <div class="field">
+            <label for="out-w">가로(px)</label>
+            <input type="number" id="out-w" inputmode="numeric" min="16" max="6000" step="1">
+          </div>
+          <div class="field">
+            <label for="out-h">세로(px)</label>
+            <input type="number" id="out-h" inputmode="numeric" min="16" max="6000" step="1">
+          </div>
+          <div class="field">
+            <label for="out-kb">최대 용량(KB)</label>
+            <input type="number" id="out-kb" inputmode="decimal" min="5" max="20000" step="1">
+          </div>
+        </div>
+        <p class="hint">숫자를 바꾸면 '직접 입력'으로 바뀝니다. 용량은 1KB=1,000바이트로 더 엄격하게 계산합니다.</p>
+        <p class="status" id="spec-status" role="alert"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-result">
+        <h2 id="h-result">3. 결과 미리보기와 저장</h2>
+        <div class="result-preview">
+          <img id="result-img" alt="변환된 사진 미리보기" hidden>
+          <p class="hint" id="result-empty">사진을 불러오면 결과가 자동으로 만들어집니다.</p>
+        </div>
+        <dl class="result-stats" id="result-stats" hidden>
+          <dt>크기</dt><dd id="r-px"></dd>
+          <dt>용량</dt><dd id="r-size"></dd>
+          <dt>목표</dt><dd id="r-target"></dd>
+          <dt>JPG 품질</dt><dd id="r-quality"></dd>
+        </dl>
+        <p class="status" id="result-status" role="status" aria-live="polite"></p>
+        <div class="btn-row">
+          <a class="btn btn-primary" id="download" aria-disabled="true" tabindex="-1">JPG 다운로드</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="guide.html">여권사진 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>규격은 참고용입니다. 제출 기관의 최신 안내를 우선하세요.</p>
+  </div>
+</footer>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
