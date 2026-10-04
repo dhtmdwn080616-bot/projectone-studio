@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>개인정보 처리 안내 - 견적서·거래명세서 만들기</title>
+<meta name="description" content="견적서·거래명세서 만들기 도구의 개인정보 처리 안내입니다. 입력 내용은 서버로 전송되지 않습니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">견적서·거래명세서 만들기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html" aria-current="page">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="prose">
+<h1>개인정보 처리 안내</h1>
+  <p class="lead">시행일: 2026년 10월 5일</p>
+
+  <h2>1. 입력 내용은 서버로 전송되지 않습니다</h2>
+  <p>이 사이트의 견적서·거래명세서 만들기 도구에 입력한 내용(사업자등록번호, 상호, 대표자, 주소, 연락처, 품목, 금액, 비고 등)은 사용자의 브라우저 안에서만 계산·표시됩니다. 입력 내용은 운영자 서버나 제3자에게 전송·저장되지 않습니다.</p>
+  <ul>
+    <li>도구 페이지에는 콘텐츠 보안 정책(<code>connect-src 'none'</code>)을 적용해, 페이지의 스크립트가 외부로 데이터를 보내는 요청(fetch, XHR, beacon, WebSocket 등)을 브라우저가 차단하도록 했습니다.</li>
+    <li>외부 스크립트, 외부 글꼴, 외부 이미지를 불러오지 않습니다.</li>
+    <li>입력 내용을 브라우저 저장소(로컬 저장소, 세션 저장소 등)에도 저장하지 않습니다. 페이지를 닫거나 새로고침하면 입력 내용은 사라집니다.</li>
+    <li>'입력 내용 파일로 내려받기'를 누르면 입력 내용이 .json 파일로 사용자 기기에 저장됩니다. 이 파일에는 입력한 사업자등록번호·상호·대표자·주소·연락처 등 공급자와 공급받는자 정보가 그대로(암호화 없이 읽을 수 있는 텍스트로) 들어 있으므로 다른 사람과 공유하거나 공용 기기에 두지 않도록 주의하세요. 이 파일과 인쇄·PDF로 저장한 문서는 사용자 기기에 그대로 남으므로 직접 관리해야 합니다. '파일 불러오기'로 고른 파일도 브라우저 안에서만 읽습니다.</li>
+  </ul>
+
+  <h2>2. 쿠키와 추적</h2>
+  <p>이 사이트는 쿠키, 로컬 저장소, 방문 분석 도구, 광고 추적 코드를 사용하지 않습니다.</p>
+  <p>다만 사이트 파일을 전달하는 호스팅 서비스는 일반적인 웹 서버처럼 접속 기록(IP 주소, 요청 시각, 브라우저 정보 등)을 남길 수 있습니다. 이 사이트는 GitHub Pages(GitHub, Inc.)에서 제공되며, 해당 접속 기록은 GitHub의 정책에 따라 처리될 수 있습니다. 운영자는 별도로 접속 기록을 수집하지 않습니다.</p>
+
+  <h2>3. 수집하는 개인정보</h2>
+  <p>운영자가 직접 수집하는 개인정보는 없습니다. 문의를 보내시는 경우에 한해, 답변을 위해 보내신 이메일 주소와 내용을 확인하며, 이는 문의에 답변하는 목적으로만 이용하고 문의 처리가 끝나면 지체 없이 삭제합니다.</p>
+
+  <h2>4. 앞으로 바뀔 수 있는 점</h2>
+  <p>광고나 방문 분석을 도입하게 되면, 도입 전에 이 안내를 먼저 고치고 무엇이 어떤 목적으로 쓰이는지 알리겠습니다.</p>
+
+  <h2>5. 문의</h2>
+  <p>운영자: 프로젝트원스튜디오<br>
+  문의 방법: dhtmdwnproject@gmail.com</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>양식 작성 보조 도구입니다. 세금계산서가 아니며 법적 효력이나 세무 신고 인정을 보장하지 않습니다.</p>
+  </div>
+</footer>
+</body>
+</html>

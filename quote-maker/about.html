@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>소개 - 견적서·거래명세서 만들기</title>
+<meta name="description" content="견적서·거래명세서 만들기 도구가 하는 일과 하지 않는 일, 운영자 정보입니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">견적서·거래명세서 만들기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html" aria-current="page">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+<main id="main" class="prose">
+<h1>소개</h1>
+  <p class="lead">견적서나 거래명세서를 빠르게 만들어 인쇄하거나 PDF로 보내야 할 때 쓰는 간단한 도구입니다. 엑셀이나 한글 양식을 내려받지 않고 브라우저에서 바로 입력할 수 있습니다.</p>
+
+  <h2>할 수 있는 일</h2>
+  <ul>
+    <li>견적서·거래명세서 중 문서 종류 고르기</li>
+    <li>공급자·공급받는자 정보와 품목(품명, 규격, 수량, 단가) 입력, 품목 추가·삭제</li>
+    <li>공급가액·부가세(별도/포함/면세)·합계와 한글 금액 자동 계산</li>
+    <li>A4 인쇄, 브라우저 인쇄 기능을 이용한 PDF 저장</li>
+    <li>입력 내용을 .json 파일로 내려받아 두었다가 다시 불러오기</li>
+  </ul>
+
+  <h2>하지 않는 일</h2>
+  <ul>
+    <li>입력 내용을 서버로 보내거나 저장하지 않습니다. 모든 처리는 브라우저 안에서 이루어집니다. 자세한 내용은 <a href="privacy.html">개인정보 처리 안내</a>를 보세요.</li>
+    <li>세금계산서를 발급하지 않습니다. 이 도구로 만든 문서는 세금계산서가 아닙니다.</li>
+    <li>문서의 법적 효력이나 세무 신고 인정을 보장하지 않습니다.</li>
+    <li>사업자등록번호는 숫자 10자리 형식만 확인하며, 실제 등록 여부나 상태는 확인하지 않습니다.</li>
+    <li>면세 해당 여부 등 세무 판단을 하지 않습니다.</li>
+  </ul>
+
+  <h2>계산에 대해</h2>
+  <p>금액은 원 단위 정수로 계산하고, 반올림 규칙을 도구 화면과 <a href="guide.html">작성 가이드</a>에 적어 두었습니다. 거래처나 회계 프로그램의 규칙과 다를 수 있으니 보내기 전에 금액을 직접 확인하세요.</p>
+
+  <h2>운영</h2>
+  <p>운영자: 프로젝트원스튜디오<br>문의 방법: dhtmdwnproject@gmail.com</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="index.html">도구</a>
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>양식 작성 보조 도구입니다. 세금계산서가 아니며 법적 효력이나 세무 신고 인정을 보장하지 않습니다.</p>
+  </div>
+</footer>
+</body>
+</html>

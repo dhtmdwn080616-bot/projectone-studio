@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html _site/
-          cp -r photo-size portfolio _site/
+          cp -r photo-size quote-maker portfolio _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

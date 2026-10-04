@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- connect-src 'none': 이 페이지는 fetch/XHR/beacon/WebSocket 등 어떤 네트워크 전송도 할 수 없다. 외부 스크립트·스타일도 불가. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>견적서·거래명세서 만들기 - 브라우저에서만 작성</title>
+<meta name="description" content="입력 내용을 서버로 보내지 않고 브라우저 안에서 견적서·거래명세서를 작성하고 부가세·합계를 자동 계산해 인쇄하거나 PDF로 저장하는 무료 도구입니다.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="site-header no-print">
+  <div class="inner">
+    <a class="brand" href="index.html">견적서·거래명세서 만들기</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      <a href="index.html" aria-current="page">도구</a>
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="no-print">
+    <h1>견적서·거래명세서 만들기</h1>
+    <p class="lead">품목과 금액을 입력하면 공급가액·부가세·합계와 한글 금액이 자동으로 계산되고, 그대로 인쇄하거나 PDF로 저장할 수 있습니다.</p>
+    <p><span class="privacy-badge">입력 내용은 이 브라우저 안에서만 쓰이며 서버로 전송되지 않습니다</span></p>
+
+    <div class="notice" role="note">
+      <p>이 도구는 양식 작성 보조 도구입니다. 여기서 만든 문서는 세금계산서가 아니며, 법적 효력이나 세무 신고 인정을 보장하지 않습니다.</p>
+      <p>세금계산서 발급, 부가세 신고, 면세 해당 여부 등은 국세청 안내나 세무사에게 확인하세요. 계산 결과도 제출·발송 전에 직접 검토하세요.</p>
+    </div>
+  </div>
+
+  <form id="editor" class="no-print" novalidate>
+    <section class="card" aria-labelledby="h-setting">
+      <h2 id="h-setting">1. 문서 설정</h2>
+      <div class="grid2">
+        <fieldset class="choice">
+          <legend>문서 종류</legend>
+          <label><input type="radio" name="docType" value="quote" checked> 견적서</label>
+          <label><input type="radio" name="docType" value="statement"> 거래명세서</label>
+        </fieldset>
+        <div class="field">
+          <label for="doc-date">작성일</label>
+          <input type="date" id="doc-date">
+        </div>
+      </div>
+      <fieldset class="choice">
+        <legend>부가세(10%) 계산 방식</legend>
+        <label><input type="radio" name="vatMode" value="separate" checked> 부가세 별도</label>
+        <label><input type="radio" name="vatMode" value="included"> 부가세 포함</label>
+        <label><input type="radio" name="vatMode" value="exempt"> 면세</label>
+      </fieldset>
+      <p class="rule" id="mode-rule" aria-live="polite"></p>
+      <details class="rules">
+        <summary>계산·반올림 규칙 전체 보기</summary>
+        <ul>
+          <li>금액은 모두 원 단위 정수로 계산합니다(소수 계산 오차가 생기지 않도록 정수 연산 사용).</li>
+          <li>품목 금액 = 수량 × 단가. 수량에 소수가 있어 원 미만이 생기면 반올림합니다(0.5원 이상 올림).</li>
+          <li>부가세 별도: 세액 = 공급가액 합계 × 10%를 원 미만 반올림. 품목마다 따로 계산하지 않고 합계에 한 번 계산합니다.</li>
+          <li>부가세 포함: 공급가액 = 합계 ÷ 1.1을 원 미만 반올림, 세액 = 합계 − 공급가액.</li>
+          <li>면세: 세액 0원.</li>
+          <li>거래처나 회계 프로그램이 버림(절사) 등 다른 규칙을 쓰면 1원 차이가 날 수 있습니다. 필요하면 금액을 직접 확인하세요.</li>
+        </ul>
+      </details>
+    </section>
+
+    <div class="grid-parties">
+      <section class="card" aria-labelledby="h-supplier">
+        <h2 id="h-supplier">2. 공급자 (보내는 쪽)</h2>
+        <div class="field">
+          <label for="supplier-bizNo">사업자등록번호</label>
+          <input type="text" id="supplier-bizNo" inputmode="numeric" maxlength="20" placeholder="000-00-00000" aria-describedby="supplier-bizNo-msg" autocomplete="off">
+          <p class="field-msg" id="supplier-bizNo-msg" aria-live="polite"></p>
+        </div>
+        <div class="field"><label for="supplier-name">상호</label><input type="text" id="supplier-name" maxlength="200" autocomplete="organization"></div>
+        <div class="field"><label for="supplier-ceo">대표자</label><input type="text" id="supplier-ceo" maxlength="200" autocomplete="off"></div>
+        <div class="field"><label for="supplier-address">주소</label><input type="text" id="supplier-address" maxlength="200" autocomplete="off"></div>
+        <div class="grid2">
+          <div class="field"><label for="supplier-bizType">업태</label><input type="text" id="supplier-bizType" maxlength="200" autocomplete="off"></div>
+          <div class="field"><label for="supplier-bizItem">종목</label><input type="text" id="supplier-bizItem" maxlength="200" autocomplete="off"></div>
+        </div>
+        <div class="field"><label for="supplier-phone">연락처</label><input type="text" id="supplier-phone" maxlength="200" inputmode="tel" autocomplete="off"></div>
+      </section>
+
+      <section class="card" aria-labelledby="h-client">
+        <h2 id="h-client">3. 공급받는자 (받는 쪽)</h2>
+        <div class="field"><label for="client-name">상호 또는 이름</label><input type="text" id="client-name" maxlength="200" autocomplete="off"></div>
+        <div class="field">
+          <label for="client-bizNo">사업자등록번호 (선택)</label>
+          <input type="text" id="client-bizNo" inputmode="numeric" maxlength="20" placeholder="000-00-00000" aria-describedby="client-bizNo-msg" autocomplete="off">
+          <p class="field-msg" id="client-bizNo-msg" aria-live="polite"></p>
+        </div>
+        <div class="field"><label for="client-ceo">대표자 또는 담당자 (선택)</label><input type="text" id="client-ceo" maxlength="200" autocomplete="off"></div>
+        <div class="field"><label for="client-address">주소 (선택)</label><input type="text" id="client-address" maxlength="200" autocomplete="off"></div>
+        <div class="field"><label for="client-phone">연락처 (선택)</label><input type="text" id="client-phone" maxlength="200" inputmode="tel" autocomplete="off"></div>
+        <p class="hint">비워 둔 선택 항목은 문서에 나오지 않습니다.</p>
+      </section>
+    </div>
+
+    <section class="card" aria-labelledby="h-items">
+      <h2 id="h-items">4. 품목</h2>
+      <p class="hint">수량은 소수 셋째 자리까지(예: 1.5), 단가는 원 단위 정수로 입력하세요. 쉼표는 넣어도 되고 빼도 됩니다.</p>
+      <ol class="items" id="items"></ol>
+      <div class="btn-row">
+        <button type="button" class="btn" id="add-item">+ 품목 추가</button>
+      </div>
+      <p class="status" id="items-status" role="status" aria-live="polite"></p>
+
+      <div class="totals" aria-labelledby="h-totals">
+        <h3 id="h-totals">자동 계산 결과</h3>
+        <dl>
+          <dt>공급가액</dt><dd id="t-supply">0원</dd>
+          <dt>세액</dt><dd id="t-vat">0원</dd>
+          <dt>합계</dt><dd id="t-total" class="t-total">0원</dd>
+          <dt>한글 금액</dt><dd id="t-hangul">일금 영원정</dd>
+        </dl>
+        <p class="status" id="sum-status"></p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-note">
+      <h2 id="h-note">5. 비고</h2>
+      <div class="field">
+        <label for="note">비고 (유효기간, 결제 조건, 납기 등)</label>
+        <textarea id="note" rows="4" maxlength="2000"></textarea>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-out">
+      <h2 id="h-out">6. 인쇄·PDF 저장과 파일 보관</h2>
+      <div class="btn-row">
+        <button type="button" class="btn btn-primary" id="print">인쇄 / PDF로 저장</button>
+      </div>
+      <p class="hint">PDF로 저장하려면 인쇄 창에서 '대상' 또는 '프린터'를 'PDF로 저장'으로 고르세요. 용지는 A4, 배율은 기본값(100%)을 권장합니다. 머리글·바닥글(주소·날짜)이 함께 찍히면 인쇄 창의 '머리글과 바닥글' 옵션을 끄세요. 메뉴 이름은 브라우저마다 다를 수 있습니다.</p>
+      <div class="btn-row">
+        <button type="button" class="btn" id="save-json">입력 내용 파일로 내려받기(.json)</button>
+        <label class="btn file-btn" for="load-json">파일 불러오기(.json)<input type="file" id="load-json" class="visually-hidden" accept=".json,application/json"></label>
+        <button type="button" class="btn" id="reset-doc">새로 작성</button>
+      </div>
+      <p class="hint">이 사이트는 입력 내용을 어디에도 저장하지 않습니다. 페이지를 닫으면 사라지므로, 다음에 이어 쓰려면 파일로 내려받아 두세요. 내려받은 파일에는 사업자·거래처 정보(등록번호, 대표자, 주소, 연락처 등)가 그대로 들어 있으니 보관과 공유에 주의하세요.</p>
+      <p class="status" id="file-status" role="status" aria-live="polite"></p>
+    </section>
+  </form>
+
+  <section class="preview-wrap" aria-labelledby="h-preview">
+    <h2 id="h-preview" class="no-print">인쇄 미리보기</h2>
+    <p class="hint no-print">아래 모양 그대로 A4 용지에 인쇄됩니다(입력 칸과 안내문은 인쇄되지 않습니다).</p>
+    <p class="hint no-print mobile-only">화면이 좁으면 미리보기를 옆으로 밀어서 보세요.</p>
+    <div class="paper-scroll" tabindex="0" role="region" aria-label="인쇄 미리보기 영역(가로 스크롤)">
+      <article id="doc" class="doc" aria-label="문서 미리보기"></article>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer no-print">
+  <div class="inner">
+    <nav aria-label="하단 메뉴">
+      <a href="guide.html">작성 가이드</a>
+      <a href="about.html">소개</a>
+      <a href="privacy.html">개인정보 안내</a>
+    </nav>
+    <p>양식 작성 보조 도구입니다. 세금계산서가 아니며 법적 효력이나 세무 신고 인정을 보장하지 않습니다.</p>
+  </div>
+</footer>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
